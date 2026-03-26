@@ -124,9 +124,9 @@ const GIRLS = 6;
 const CAR_DAY = 45;
 const ILS = 3.65;
 const OPTIONS = [
-  { id:"jul3", label:"23–26/7", days:"חמישי – ראשון", nights:3, villa:1921, carDays:3, flight:305 },
-  { id:"jul4", label:"22–26/7", days:"רביעי – ראשון", nights:4, villa:2484, carDays:4, flight:290 },
-  { id:"aug4", label:"5–9/8",   days:"רביעי – ראשון", nights:4, villa:2868, carDays:4, flight:360 },
+  { id:"jul3", label:"23–26/7", days:"חמישי – ראשון", nights:3, villa:1921, carTotal:87,  flight:305 },
+  { id:"jul4", label:"22–26/7", days:"רביעי – ראשון", nights:4, villa:2484, carTotal:125, flight:290 },
+  { id:"aug4", label:"5–9/8",   days:"רביעי – ראשון", nights:4, villa:2868, carTotal:125, flight:360 },
 ];
 
 let food=300, cur="USD", myVote=null, myName="", votes={};
@@ -143,7 +143,7 @@ function fmt(n) {
 
 function calc(o) {
   const flightTot = o.flight * GIRLS;
-  const cars = CAR_DAY * o.carDays * 2;
+  const cars = o.carTotal;
   const foodTot = food * (o.nights+1);
   return { flightTot, cars, foodTot, total: flightTot + o.villa + cars + foodTot };
 }
@@ -171,7 +171,7 @@ function renderCards() {
     const rows = [
       {e:"✈️",label:"טיסות ישראייר", tot:c.flightTot, pp:o.flight,        note:`${fmt(o.flight)} × ${GIRLS} נוסעות`},
       {e:"🏠",label:"וילה",           tot:o.villa,      pp:o.villa/GIRLS,  note:`${o.nights} לילות · Airbnb`},
-      {e:"🚗",label:"2 רכבים",        tot:c.cars,        pp:c.cars/GIRLS,   note:`${o.carDays} ימים × 2 × $${CAR_DAY}/יום`},
+      {e:"🚗",label:"2 רכבים",        tot:c.cars, pp:c.cars/GIRLS, note:`מחיר אמיתי · המרה מיורו`},
       {e:"🍽️",label:"אוכל+הוצאות",  tot:c.foodTot,     pp:c.foodTot/GIRLS,note:`$${food}/יום × ${o.nights+1} ימים`},
     ];
     html += `<div class="card${isBest?' best':''}">`;
