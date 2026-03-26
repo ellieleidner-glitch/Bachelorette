@@ -8,20 +8,18 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8f5ff; min-height: 100vh; padding: 20px 16px; }
   h1 { font-size: 22px; font-weight: 800; color: #5b21b6; margin: 4px 0 0; }
+  .header { text-align: center; margin-bottom: 20px; }
   .subtitle { color: #7c3aed; font-size: 13px; margin-top: 4px; }
-  .header { text-align: center; margin-bottom: 24px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .tab { flex: 1; padding: 10px; border: none; cursor: pointer; font-weight: 700; font-size: 14px; border-radius: 12px; background: #f3f4f6; color: #374151; transition: all 0.15s; font-family: inherit; }
+  .tab.active { background: #7c3aed; color: white; }
   .section { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(91,33,182,0.08); }
-  .section-title { font-size: 13px; font-weight: 700; color: #5b21b6; margin-bottom: 12px; }
-  .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .edit-field { display: flex; flex-direction: column; gap: 4px; }
-  .edit-field label { font-size: 11px; color: #6b7280; font-weight: 600; }
-  .edit-field input { border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 7px 10px; font-size: 13px; font-family: inherit; color: #1f2937; transition: border 0.15s; width: 100%; }
-  .edit-field input:focus { outline: none; border-color: #7c3aed; }
-  .controls { display: flex; flex-wrap: wrap; gap: 16px; }
-  .ctrl-label { font-size: 11px; color: #6b7280; margin-bottom: 5px; font-weight: 600; }
+  .section-title { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 14px; }
   .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
-  button { padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; background: #f3f4f6; color: #374151; transition: all 0.15s; }
-  button.active { background: #7c3aed; color: white; }
+  .btn { padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; background: #f3f4f6; color: #374151; transition: all 0.15s; font-family: inherit; }
+  .btn.active { background: #7c3aed; color: white; }
+  .ctrl-label { font-size: 11px; color: #6b7280; margin-bottom: 5px; font-weight: 600; }
+  .controls-row { display: flex; flex-wrap: wrap; gap: 16px; }
   .card { background: white; border-radius: 16px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); border: 2px solid transparent; }
   .card.best { border-color: #7c3aed; box-shadow: 0 4px 20px rgba(124,58,237,0.25); }
   .best-banner { background: #7c3aed; color: white; text-align: center; padding: 6px; font-size: 12px; font-weight: 700; }
@@ -29,6 +27,8 @@
   .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
   .card-title { font-size: 22px; font-weight: 800; color: #1f2937; }
   .card-dates { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .voters { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .voter-tag { background: #ede9fe; color: #5b21b6; border-radius: 12px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
   .card-total-label { font-size: 11px; color: #6b7280; text-align: left; }
   .card-total-amount { font-size: 22px; font-weight: 800; color: #1f2937; text-align: left; }
   .card-total-amount.best { color: #7c3aed; }
@@ -45,8 +45,30 @@
   .total-row-amt { font-size: 17px; font-weight: 800; color: #1f2937; }
   .total-row-amt.best { color: #7c3aed; }
   .total-row-pp { font-size: 12px; color: #059669; font-weight: 700; margin-right: 8px; }
-  .notes-body { font-size: 12px; color: #6b7280; line-height: 2; }
+  .vote-option { display: flex; justify-content: space-between; align-items: center; background: #f9fafb; border: 2px solid transparent; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+  .vote-option.selected { background: #ede9fe; border-color: #7c3aed; }
+  .vote-option-label { font-size: 15px; font-weight: 700; color: #1f2937; }
+  .vote-option.selected .vote-option-label { color: #5b21b6; }
+  .vote-option-sub { font-size: 11px; color: #6b7280; }
+  .vote-option-pp { font-size: 13px; font-weight: 700; text-align: left; }
+  .input-field { width: 100%; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 9px 12px; font-size: 14px; font-family: inherit; color: #1f2937; margin-top: 5px; }
+  .input-field:focus { outline: none; border-color: #7c3aed; }
+  .submit-btn { width: 100%; padding: 12px; background: #e5e7eb; color: #9ca3af; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: default; font-family: inherit; transition: all 0.15s; }
+  .submit-btn.ready { background: #7c3aed; color: white; cursor: pointer; }
+  .success-box { background: #ede9fe; border-radius: 16px; padding: 16px; margin-bottom: 16px; text-align: center; }
+  .bar-bg { background: #f3f4f6; border-radius: 20px; height: 10px; overflow: hidden; margin: 5px 0; }
+  .bar-fill { height: 100%; border-radius: 20px; transition: width 0.4s; background: #a78bfa; }
+  .bar-fill.winning { background: #7c3aed; }
+  .result-row { margin-bottom: 14px; }
+  .result-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .result-label { font-weight: 700; font-size: 14px; color: #1f2937; }
+  .result-label.winning { color: #5b21b6; }
+  .result-count { font-weight: 700; font-size: 14px; color: #374151; }
+  .result-count.winning { color: #7c3aed; }
+  .reset-btn { padding: 6px 14px; background: white; border: 1px solid #e5e7eb; color: #9ca3af; border-radius: 20px; font-size: 11px; cursor: pointer; font-family: inherit; margin-top: 8px; }
+  .error { color: #ef4444; font-size: 12px; margin-top: 4px; }
   .footer { text-align: center; margin-top: 16px; font-size: 11px; color: #9ca3af; }
+  #tab-compare, #tab-vote { display: none; }
 </style>
 </head>
 <body>
@@ -57,58 +79,41 @@
   <div class="subtitle">Villa Horizon Bleau · Palaia Fokaia · 6 בנות</div>
 </div>
 
-<!-- Edit: Flights -->
-<div class="section">
-  <div class="section-title">✈️ מחיר טיסה לאדם (הלוך-חזור, ישראייר)</div>
-  <div class="edit-grid">
-    <div class="edit-field"><label>23–26/7 (ח׳-ראשון)</label><input type="number" id="f_jul3" value="288" oninput="render()"></div>
-    <div class="edit-field"><label>22–26/7 (ד׳-ראשון)</label><input type="number" id="f_jul4" value="276" oninput="render()"></div>
-    <div class="edit-field"><label>5–9/8 (ד׳-ראשון)</label><input type="number" id="f_aug4" value="312" oninput="render()"></div>
-  </div>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('compare')" id="btn-compare">📊 השוואת מחירים</button>
+  <button class="tab" onclick="showTab('vote')" id="btn-vote">🗳️ הצבעה</button>
 </div>
 
-<!-- Edit: Villa -->
-<div class="section">
-  <div class="section-title">🏠 מחיר וילה (סה"כ)</div>
-  <div class="edit-grid">
-    <div class="edit-field"><label>23–26/7 (3 לילות)</label><input type="number" id="v_jul3" value="1921" oninput="render()"></div>
-    <div class="edit-field"><label>22–26/7 (4 לילות)</label><input type="number" id="v_jul4" value="2484" oninput="render()"></div>
-    <div class="edit-field"><label>5–9/8 (4 לילות)</label><input type="number" id="v_aug4" value="2868" oninput="render()"></div>
-  </div>
-</div>
-
-<!-- Edit: Car + Food + Rate -->
-<div class="section">
-  <div class="section-title">⚙️ הגדרות כלליות</div>
-  <div class="edit-grid">
-    <div class="edit-field"><label>🚗 מחיר רכב ליום ($)</label><input type="number" id="carDay" value="45" oninput="render()"></div>
-    <div class="edit-field"><label>🍽️ אוכל + הוצאות לקבוצה/יום ($)</label><input type="number" id="foodDay" value="300" oninput="render()"></div>
-    <div class="edit-field"><label>💱 שער דולר-שקל</label><input type="number" id="ilsRate" value="3.65" step="0.01" oninput="render()"></div>
-  </div>
-</div>
-
-<!-- Currency toggle -->
-<div class="section">
-  <div class="controls">
-    <div>
-      <div class="ctrl-label">מטבע תצוגה 💱</div>
-      <div class="btn-group">
-        <button onclick="setCur('USD')" id="cUSD" class="active">$ דולר</button>
-        <button onclick="setCur('ILS')" id="cILS">₪ שקל</button>
+<!-- COMPARE TAB -->
+<div id="tab-compare">
+  <div class="section">
+    <div class="controls-row">
+      <div>
+        <div class="ctrl-label">אוכל + הוצאות לקבוצה/יום 🍽️</div>
+        <div class="btn-group">
+          <button class="btn" onclick="setFood(200)" id="f200">$200</button>
+          <button class="btn active" onclick="setFood(300)" id="f300">$300</button>
+          <button class="btn" onclick="setFood(400)" id="f400">$400</button>
+        </div>
+      </div>
+      <div>
+        <div class="ctrl-label">מטבע 💱</div>
+        <div class="btn-group">
+          <button class="btn active" onclick="setCur('USD')" id="cUSD">$ דולר</button>
+          <button class="btn" onclick="setCur('ILS')" id="cILS">₪ שקל</button>
+        </div>
       </div>
     </div>
   </div>
+  <div id="cards"></div>
 </div>
 
-<div id="cards"></div>
-
-<div class="section">
-  <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:8px">📝 הערות</div>
-  <div class="notes-body">
-    • מחירי הווילה הם מחירים אמיתיים מ-Airbnb<br>
-    • מחירי הטיסות הם מחירים אמיתיים מגוגל פלייטס (ישראייר, הלוך-חזור לאדם)<br>
-    • האפשרות 6–9/8 אינה זמינה — הווילה דורשת מינימום 4 לילות<br>
-    • ניתן לערוך את כל המחירים בשדות למעלה
+<!-- VOTE TAB -->
+<div id="tab-vote">
+  <div id="vote-form-wrap"></div>
+  <div class="section">
+    <div class="section-title" id="results-title">📊 תוצאות</div>
+    <div id="results"></div>
   </div>
 </div>
 
@@ -116,79 +121,183 @@
 
 <script>
 const GIRLS = 6;
+const CAR_DAY = 45;
+const ILS = 3.65;
 const OPTIONS = [
-  { id:"jul3", label:"23–26/7", days:"חמישי – ראשון", nights:3, carDays:3 },
-  { id:"jul4", label:"22–26/7", days:"רביעי – ראשון", nights:4, carDays:4 },
-  { id:"aug4", label:"5–9/8",   days:"רביעי – ראשון", nights:4, carDays:4 },
+  { id:"jul3", label:"23–26/7", days:"חמישי – ראשון", nights:3, villa:1921, carDays:3, flight:305 },
+  { id:"jul4", label:"22–26/7", days:"רביעי – ראשון", nights:4, villa:2484, carDays:4, flight:290 },
+  { id:"aug4", label:"5–9/8",   days:"רביעי – ראשון", nights:4, villa:2868, carDays:4, flight:360 },
 ];
 
-let cur = "USD";
+let food=300, cur="USD", myVote=null, myName="", votes={};
 
-function val(id) { return parseFloat(document.getElementById(id).value) || 0; }
+// Load votes from localStorage
+try { const s = localStorage.getItem("bachelorette_votes"); if(s) votes = JSON.parse(s); } catch(e){}
+
+function saveVotes() { try { localStorage.setItem("bachelorette_votes", JSON.stringify(votes)); } catch(e){} }
 
 function fmt(n) {
-  const rate = val("ilsRate") || 3.65;
-  const v = Math.round(cur === "ILS" ? n * rate : n);
-  return (cur === "ILS" ? "₪" : "$") + v.toLocaleString();
+  const v = Math.round(cur==="ILS" ? n*ILS : n);
+  return (cur==="ILS"?"₪":"$") + v.toLocaleString();
 }
 
 function calc(o) {
-  const flight  = val("f_" + o.id);
-  const villa   = val("v_" + o.id);
-  const carDay  = val("carDay");
-  const food    = val("foodDay");
-  const flightTot = flight * GIRLS;
-  const cars      = carDay * o.carDays * 2;
-  const foodTot   = food * (o.nights + 1);
-  const total     = flightTot + villa + cars + foodTot;
-  return { flight, flightTot, villa, cars, foodTot, total };
+  const flightTot = o.flight * GIRLS;
+  const cars = CAR_DAY * o.carDays * 2;
+  const foodTot = food * (o.nights+1);
+  return { flightTot, cars, foodTot, total: flightTot + o.villa + cars + foodTot };
 }
 
-function render() {
-  const totals = OPTIONS.map(o => calc(o).total);
-  const minTotal = Math.min(...totals);
+function bestId() {
+  return OPTIONS.reduce((b,o) => calc(o).total < calc(b).total ? o : b, OPTIONS[0]).id;
+}
+
+function showTab(t) {
+  document.getElementById("tab-compare").style.display = t==="compare" ? "block" : "none";
+  document.getElementById("tab-vote").style.display    = t==="vote"    ? "block" : "none";
+  document.getElementById("btn-compare").className = "tab" + (t==="compare"?" active":"");
+  document.getElementById("btn-vote").className    = "tab" + (t==="vote"   ?" active":"");
+  if(t==="vote") { renderVoteForm(); renderResults(); }
+  if(t==="compare") renderCards();
+}
+
+function renderCards() {
+  const bid = bestId();
   let html = "";
-  OPTIONS.forEach((o, i) => {
+  OPTIONS.forEach(o => {
     const c = calc(o);
-    const isBest = c.total === minTotal;
+    const isBest = o.id===bid;
+    const voters = Object.entries(votes).filter(([,v])=>v===o.id).map(([n])=>n);
     const rows = [
-      { e:"✈️", label:"טיסות ישראייר",  tot:c.flightTot, pp:c.flight,          note:`${fmt(c.flight)} × ${GIRLS} נוסעות · הלוך-חזור` },
-      { e:"🏠", label:"וילה",            tot:c.villa,     pp:c.villa/GIRLS,     note:`${o.nights} לילות · Airbnb` },
-      { e:"🚗", label:"2 רכבים",         tot:c.cars,      pp:c.cars/GIRLS,      note:`${o.carDays} ימים × 2 × $${val("carDay")}/יום` },
-      { e:"🍽️", label:"אוכל + הוצאות", tot:c.foodTot,   pp:c.foodTot/GIRLS,   note:`$${val("foodDay")}/יום × ${o.nights+1} ימים` },
+      {e:"✈️",label:"טיסות ישראייר", tot:c.flightTot, pp:o.flight,        note:`${fmt(o.flight)} × ${GIRLS} נוסעות`},
+      {e:"🏠",label:"וילה",           tot:o.villa,      pp:o.villa/GIRLS,  note:`${o.nights} לילות · Airbnb`},
+      {e:"🚗",label:"2 רכבים",        tot:c.cars,        pp:c.cars/GIRLS,   note:`${o.carDays} ימים × 2 × $${CAR_DAY}/יום`},
+      {e:"🍽️",label:"אוכל+הוצאות",  tot:c.foodTot,     pp:c.foodTot/GIRLS,note:`$${food}/יום × ${o.nights+1} ימים`},
     ];
-    html += `<div class="card ${isBest?'best':''}">`;
-    if (isBest) html += `<div class="best-banner">⭐ האפשרות המשתלמת ביותר</div>`;
-    html += `<div class="card-inner"><div class="card-header">
-      <div><div class="card-title">${o.label}</div><div class="card-dates">${o.days} · ${o.nights} לילות</div></div>
-      <div>
-        <div class="card-total-label">סה"כ לקבוצה</div>
-        <div class="card-total-amount ${isBest?'best':''}">${fmt(c.total)}</div>
-        <div class="card-total-pp">${fmt(c.total/GIRLS)} / אדם</div>
-      </div>
-    </div>`;
+    html += `<div class="card${isBest?' best':''}">`;
+    if(isBest) html += `<div class="best-banner">⭐ האפשרות המשתלמת ביותר</div>`;
+    html += `<div class="card-inner"><div class="card-header"><div>
+      <div class="card-title">${o.label}</div>
+      <div class="card-dates">${o.days} · ${o.nights} לילות</div>
+      ${voters.length?`<div class="voters">${voters.map(n=>`<span class="voter-tag">👍 ${n}</span>`).join("")}</div>`:""}
+    </div><div>
+      <div class="card-total-label">סה"כ לקבוצה</div>
+      <div class="card-total-amount${isBest?' best':''}">${fmt(c.total)}</div>
+      <div class="card-total-pp">${fmt(c.total/GIRLS)} / אדם</div>
+    </div></div>`;
     rows.forEach(r => {
-      html += `<div class="row">
-        <div><div class="row-label">${r.e} ${r.label}</div><div class="row-note">${r.note}</div></div>
-        <div><div class="row-amt">${fmt(r.tot)}</div><div class="row-pp">${fmt(r.pp)} / אדם</div></div>
-      </div>`;
+      html += `<div class="row"><div><div class="row-label">${r.e} ${r.label}</div><div class="row-note">${r.note}</div></div>
+        <div><div class="row-amt">${fmt(r.tot)}</div><div class="row-pp">${fmt(r.pp)} / אדם</div></div></div>`;
     });
-    html += `<div class="total-row ${isBest?'best':''}">
-      <span class="total-row-label ${isBest?'best':''}">💰 סה"כ</span>
-      <div><span class="total-row-amt ${isBest?'best':''}">${fmt(c.total)}</span>
+    html += `<div class="total-row${isBest?' best':''}">
+      <span class="total-row-label${isBest?' best':''}">💰 סה"כ</span>
+      <div><span class="total-row-amt${isBest?' best':''}">${fmt(c.total)}</span>
       <span class="total-row-pp"> · ${fmt(c.total/GIRLS)} / אדם</span></div>
     </div></div></div>`;
   });
   document.getElementById("cards").innerHTML = html;
 }
 
-function setCur(v) {
-  cur = v;
-  ["USD","ILS"].forEach(x => document.getElementById("c"+x).classList.toggle("active", x===v));
-  render();
+function renderVoteForm() {
+  const wrap = document.getElementById("vote-form-wrap");
+  if(myName) {
+    const opt = OPTIONS.find(o=>o.id===myVote);
+    wrap.innerHTML = `<div class="success-box">
+      <div style="font-size:20px">✅</div>
+      <div style="font-size:14px;font-weight:700;color:#5b21b6;margin-top:4px">הצבעת על ${opt?.label}!</div>
+      <button class="reset-btn" onclick="changeVote()">שני הצבעה</button>
+    </div>`;
+    return;
+  }
+  let optionsHtml = OPTIONS.map(o => {
+    const c = calc(o);
+    return `<div class="vote-option${myVote===o.id?' selected':''}" onclick="selectVote('${o.id}')">
+      <div><div class="vote-option-label">${o.label}</div><div class="vote-option-sub">${o.days} · ${o.nights} לילות</div></div>
+      <div class="vote-option-pp">${fmt(c.total/GIRLS)}/אדם ${myVote===o.id?'✓':''}</div>
+    </div>`;
+  }).join("");
+  const ready = myVote && document.getElementById("nameInp")?.value?.trim();
+  wrap.innerHTML = `<div class="section">
+    <div class="section-title">🗳️ הצביעי לאפשרות המועדפת</div>
+    <div style="margin-bottom:14px">
+      <div class="ctrl-label">השם שלך</div>
+      <input class="input-field" id="nameInp" placeholder="למשל: נועה" oninput="renderVoteForm()">
+      <div class="error" id="nameErr"></div>
+    </div>
+    ${optionsHtml}
+    <button class="submit-btn${myVote?' ready':''}" id="submitBtn" onclick="submitVote()"
+      ${myVote?'':'disabled'}>✅ שלחי הצבעה</button>
+  </div>`;
 }
 
-render();
+function selectVote(id) {
+  myVote = id;
+  renderVoteForm();
+}
+
+function submitVote() {
+  const name = document.getElementById("nameInp")?.value?.trim();
+  if(!name) { document.getElementById("nameErr").textContent="נא להזין שם"; return; }
+  if(!myVote) return;
+  votes[name] = myVote;
+  myName = name;
+  saveVotes();
+  renderVoteForm();
+  renderResults();
+  // refresh vote tab button count
+  const total = Object.keys(votes).length;
+  document.getElementById("btn-vote").textContent = `🗳️ הצבעה (${total}/${GIRLS})`;
+}
+
+function changeVote() { myName=""; renderVoteForm(); }
+
+function renderResults() {
+  const total = Object.keys(votes).length;
+  document.getElementById("results-title").textContent = `📊 תוצאות${total>0?` · ${total} מתוך ${GIRLS} הצביעו`:""}`;
+  const counts = {};
+  OPTIONS.forEach(o => counts[o.id] = Object.values(votes).filter(v=>v===o.id).length);
+  const maxV = Math.max(...Object.values(counts), 0);
+  if(total===0) { document.getElementById("results").innerHTML=`<div style="color:#9ca3af;font-size:13px;text-align:center;padding:10px">עדיין אין הצבעות</div>`; return; }
+  let html = "";
+  OPTIONS.forEach(o => {
+    const count = counts[o.id];
+    const pct = total>0 ? Math.round(count/total*100) : 0;
+    const win = count===maxV && count>0;
+    const voters = Object.entries(votes).filter(([,v])=>v===o.id).map(([n])=>n);
+    html += `<div class="result-row">
+      <div class="result-header">
+        <div class="result-label${win?' winning':''}">${win?"⭐ ":""}${o.label} · ${o.days}</div>
+        <div class="result-count${win?' winning':''}">${count} קולות</div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill${win?' winning':''}" style="width:${pct}%"></div></div>
+      ${voters.length?`<div class="voters">${voters.map(n=>`<span class="voter-tag">👍 ${n}</span>`).join("")}</div>`:""}
+    </div>`;
+  });
+  html += `<button class="reset-btn" onclick="resetVotes()">איפוס הצבעות</button>`;
+  document.getElementById("results").innerHTML = html;
+}
+
+function resetVotes() {
+  votes={}; myName=""; myVote=null;
+  saveVotes();
+  document.getElementById("btn-vote").textContent = `🗳️ הצבעה`;
+  renderVoteForm(); renderResults();
+}
+
+function setFood(v) {
+  food=v;
+  [200,300,400].forEach(x=>document.getElementById("f"+x).classList.toggle("active",x===v));
+  renderCards();
+}
+
+function setCur(v) {
+  cur=v;
+  ["USD","ILS"].forEach(x=>document.getElementById("c"+x).classList.toggle("active",x===v));
+  renderCards();
+}
+
+// Init
+showTab("compare");
 </script>
 </body>
 </html>
